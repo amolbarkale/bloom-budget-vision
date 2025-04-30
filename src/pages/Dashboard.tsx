@@ -14,15 +14,26 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const { expenses, fetchExpenses, isLoading } = useBudget();
   const [activeTab, setActiveTab] = useState('recent');
+  const [initialLoaded, setInitialLoaded] = useState(false);
 
   useEffect(() => {
-    fetchExpenses();
+    const loadData = async () => {
+      await fetchExpenses();
+      setInitialLoaded(true);
+    };
+    
+    loadData();
   }, [fetchExpenses]);
 
   // Get recent expenses (last 5)
   const recentExpenses = [...expenses]
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
     .slice(0, 5);
+
+  // Prepare UI rendering states to prevent shaking
+  const showLoadingState = isLoading && !initialLoaded;
+  const showEmptyState = !isLoading && initialLoaded && recentExpenses.length === 0;
+  const showExpenseList = !isLoading && recentExpenses.length > 0;
 
   return (
     <div className="min-h-screen bg-background">
@@ -90,15 +101,15 @@ const Dashboard = () => {
           {activeTab === 'recent' && (
             <Card>
               <CardContent className="p-4">
-                {isLoading ? (
+                {showLoadingState ? (
                   <div className="text-center py-8 text-muted-foreground">
                     Loading expenses...
                   </div>
-                ) : recentExpenses.length === 0 ? (
+                ) : showEmptyState ? (
                   <div className="text-center py-8 text-muted-foreground">
                     No recent expenses. Add your first expense to get started.
                   </div>
-                ) : (
+                ) : showExpenseList ? (
                   <>
                     <ExpenseList />
                     <div className="mt-4 text-center">
@@ -110,7 +121,7 @@ const Dashboard = () => {
                       </Button>
                     </div>
                   </>
-                )}
+                ) : null}
               </CardContent>
             </Card>
           )}
