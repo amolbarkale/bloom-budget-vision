@@ -6,15 +6,15 @@
   <br />
 
   <div>
-    <img src="https://img.shields.io/badge/-Next_JS-black?style=for-the-badge&logoColor=white&logo=nextdotjs&color=000000" alt="nextjs" />
+    <img src="https://img.shields.io/badge/-React_JS-61DAFB?style=for-the-badge&logo=react&logoColor=white" alt="react" />
     <img src="https://img.shields.io/badge/-TypeScript-black?style=for-the-badge&logoColor=white&logo=typescript&color=3178C6" alt="typescript" />
-    <img src="https://img.shields.io/badge/-GraphQL-black?style=for-the-badge&logoColor=white&logo=graphql&color=E10098" alt="graphql" />
-    <img src="https://img.shields.io/badge/-AWS_Cognito-black?style=for-the-badge&logoColor=white&logo=amazonaws&color=FF9900" alt="aws cognito" />
+    <img src="https://img.shields.io/badge/-Supabase_DB-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white" alt="supabase db" />
     <img src="https://img.shields.io/badge/-Tailwind_CSS-black?style=for-the-badge&logoColor=white&logo=tailwindcss&color=06B6D4" alt="tailwindcss" />
     <img src="https://img.shields.io/badge/-ShadCN_UI-black?style=for-the-badge&logoColor=white&logo=shadcnui&color=000000" alt="shadcnui" />
+
   </div>
 
-  <h3 align="center">The Lumos</h3>
+  <h3 align="center">The BudgetBloom</h3>
   <div align="center">
      Build this project step by step or explore it with following steps, Happy Coding!
   </div>
@@ -46,27 +46,27 @@ You’re tasked with building an elegant, secure MVP for this financial self-awa
 
 ## <a name="features">🔋 Features</a>
 
-👉 **Authentication**: 
+👉 **Authentication**:
 
-👉 **Home Page**: 
+👉 **Home Page**:
 
-👉 **Feature (Tag) Breakdown**: 
+👉 **Feature (Tag) Breakdown**:
 
-👉 **User Management**: 
+👉 **User Management**:
 
-👉 **Data Science Processed Data**: 
+👉 **Data Science Processed Data**:
 
-👉 **Modern UI**: 
+👉 **Modern UI**:
 
-👉 **Game/Feature Details**: 
+👉 **Game/Feature Details**:
 
-👉 **Game Category Finder**: 
+👉 **Game Category Finder**:
 
-👉 **Tags Overlay**: 
+👉 **Tags Overlay**:
 
-👉 **Global Search**: 
+👉 **Global Search**:
 
-👉 **Responsive Design**: 
+👉 **Responsive Design**:
 
 and many more...
 
@@ -117,8 +117,5 @@ Make sure you have the following installed on your machine:
    Open your browser and navigate to:
 
    [http://localhost:3000](http://localhost:3000)
-
-7. **Whitelist Your IP Address**
-   If you are working from home, ensure that your IP address is whitelisted to fetch SMA queries and DS APIs.
 
 ---
