@@ -1,7 +1,7 @@
 <div align="center">
   <br />
     <a href="https://test.sqa.gameopedia.com" target="_blank">
-      <img src="/images/img_project_banner.webp" alt="Project Banner">
+      <img src="/images/budget-bloom-banner.jpg" alt="Project Banner">
     </a>
   <br />
 
@@ -10,15 +10,15 @@
     <img src="https://img.shields.io/badge/-TypeScript-black?style=for-the-badge&logoColor=white&logo=typescript&color=3178C6" alt="typescript" />
     <img src="https://img.shields.io/badge/-Supabase_DB-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white" alt="supabase db" />
     <img src="https://img.shields.io/badge/-Tailwind_CSS-black?style=for-the-badge&logoColor=white&logo=tailwindcss&color=06B6D4" alt="tailwindcss" />
-    <img src="https://img.shields.io/badge/-ShadCN_UI-black?style=for-the-badge&logoColor=white&logo=shadcnui&color=000000" alt="shadcnui" />
 
   </div>
 
   <h3 align="center">The BudgetBloom</h3>
   <div align="center">
-     Build this project step by step or explore it with following steps, Happy Coding!
+     Contribute to this project step by step or explore it with following steps, Happy Coding!
   </div>
 </div>
+
 <br/>
 
 ## 📋 <a name="table">Table of Contents</a>
@@ -32,55 +32,59 @@
 
 ## <a name="introduction">🤖 Introduction</a>
 
-**BudgetBloom** is a clean, focused personal budgeting platform that helps users track daily expenses, set monthly savings goals, and visually understand where their money is going—category by category.
-
-You’re tasked with building an elegant, secure MVP for this financial self-awareness platform.
+**BudgetBloom** is a clean, focused personal budgeting platform that helps users track daily expenses, set and monitor monthly savings goals, and visualize spending by category and over time. Built as an MVP, it offers essential financial self-awareness tools in a modern, responsive UI.
 
 ## <a name="tech-stack">⚙️ Tech Stack</a>
 
-- Zod
-- Supabase SDKs for Databse access
-- ShadCN UI
+- React
 - TypeScript
-- TailwindCSS
+- Supabase (Auth & Database)
+- Tailwind CSS
+- Zod (input validation)
 
 ## <a name="features">🔋 Features</a>
 
-👉 **Authentication**:
+- **Authentication**
 
-👉 **Home Page**:
+  - Sign up, email verification, login, and logout
 
-👉 **Feature (Tag) Breakdown**:
+- **Expense Management**
 
-👉 **User Management**:
+  - Add, view, update, and delete expenses in real time
 
-👉 **Data Science Processed Data**:
+- **Savings Goals**
 
-👉 **Modern UI**:
+  - Create, edit, and remove monthly savings goals
+  - Track progress with dynamic progress bars
 
-👉 **Game/Feature Details**:
+- **Data Visualization**
 
-👉 **Game Category Finder**:
+  - Pie charts for category breakdown
+  - Bar charts for spending over selected date ranges
 
-👉 **Tags Overlay**:
+- **Profile Management**
 
-👉 **Global Search**:
+  - View account info
+  - Reset password flow
 
-👉 **Responsive Design**:
+- **History Page**
+
+  - Browse all past expenses
+
+- **Responsive Design**
+  - Mobile-first layout for all screens
 
 and many more...
 
 ## <a name="quick-start">🤸 Quick Start</a>
 
-Follow these steps to set up the project locally on your machine.
+Follow these steps to set up the project locally.
 
 **Prerequisites**
 
-Make sure you have the following installed on your machine:
-
 - [Git](https://git-scm.com/)
 - [Node.js](https://nodejs.org/en) - version 18
-- [npm](https://www.npmjs.com/) (Node Package Manager)
+- [npm](https://www.npmjs.com/)
 
 **Steps to Set Up**
 
@@ -91,8 +95,8 @@ Make sure you have the following installed on your machine:
    Run the following commands to clone the repository and navigate to the project folder:
 
    ```bash
-   git clone https://github.com/gop-git/quest_arcade_app.git
-   cd quest_arcade_app
+   git clone https://github.com/amolbarkale/bloom-budget-vision.git
+   cd bloom-budget-vision
    git checkout main
    ```
 
@@ -104,7 +108,7 @@ Make sure you have the following installed on your machine:
    ```
 
 4. **Set Up Environment Variables**
-   Find the `.env` file from project developers and place it in the root directory of the project. You can refere `.env.example` for your referance
+   Attach your supabase credentials in the `.env` file and place it in the root of the project. You can refere `.env.example`
 
 5. **Run the Development Server**
    Start the development server with the following command:
