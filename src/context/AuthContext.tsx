@@ -4,11 +4,6 @@ import { toast } from "sonner";
 import { supabase } from "@/lib/supabaseClient";
 import type { Session, User } from "@supabase/supabase-js";
 
-// ---
-// AuthContext provides user/session state and auth actions using Supabase
-// Includes email confirmation notification and enhanced error handling
-// ---
-
 interface AuthContextType {
   user: User | null;
   session: Session | null;
@@ -51,7 +46,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       }
     );
 
-    // Cleanup subscription on unmount
     return () => {
       listener.subscription.unsubscribe();
     };
@@ -71,7 +65,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       navigate("/dashboard");
     } catch (err: any) {
       console.error("SignIn error:", err.message);
-      // Notify if email is unconfirmed
       if (err.message.toLowerCase().includes("confirm")) {
         toast.error(
           "Please confirm your email before logging in. Check your inbox."

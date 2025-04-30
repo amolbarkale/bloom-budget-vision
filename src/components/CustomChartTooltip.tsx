@@ -2,7 +2,6 @@ import React from "react";
 import { TooltipProps } from "recharts";
 import { Card, CardContent } from "@/components/ui/card";
 
-// This component fixes the type error by providing proper typing for the tooltip props
 const CustomChartTooltip = ({
   active,
   payload,

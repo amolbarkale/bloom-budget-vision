@@ -26,7 +26,6 @@ const SavingsGoalList = () => {
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
 
-  // Calculate spent amount for a specific month
   const calculateSpentForMonth = (month) => {
     return expenses
       .filter((expense) => {
@@ -36,12 +35,10 @@ const SavingsGoalList = () => {
       .reduce((total, expense) => total + expense.amount, 0);
   };
 
-  // Sort goals by date (newest first)
   const sortedGoals = [...goals].sort((a, b) => {
     return new Date(b.month).getTime() - new Date(a.month).getTime();
   });
 
-  // Delete confirmation
   const confirmDelete = (goal) => {
     setSelectedGoal(goal);
     setIsDeleteDialogOpen(true);
@@ -54,7 +51,6 @@ const SavingsGoalList = () => {
     }
   };
 
-  // Edit goal
   const handleEdit = (goal) => {
     setSelectedGoal(goal);
     setIsEditDialogOpen(true);
@@ -70,9 +66,6 @@ const SavingsGoalList = () => {
             100,
             Math.max(0, (savedAmount / goal.targetAmount) * 100)
           );
-
-          const isCurrentOrFuture =
-            new Date(goal.month + "-01") >= new Date(new Date().setDate(1));
 
           return (
             <Card key={goal.id} className="animate-fade-in">

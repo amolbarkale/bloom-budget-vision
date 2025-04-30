@@ -57,11 +57,9 @@ export const BudgetProvider = ({ children }: { children: React.ReactNode }) => {
   const [expenses, setExpenses] = useState<Expense[]>([]);
   const [goals, setGoals] = useState<SavingsGoal[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  // const { token, isAuthenticated } = useAuth();
   const { isAuthenticated, session } = useAuth();
   const userId = session?.user.id;
 
-  // Fetch all expenses for this user
   const fetchExpenses = async () => {
     if (!userId) return;
     setIsLoading(true);
@@ -201,7 +199,6 @@ export const BudgetProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
-  // Calculate the total expenses for the current month
   const getCurrentMonth = () => {
     const date = new Date();
     return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`;
@@ -211,11 +208,9 @@ export const BudgetProvider = ({ children }: { children: React.ReactNode }) => {
     .filter((expense) => expense.date.startsWith(getCurrentMonth()))
     .reduce((total, expense) => total + expense.amount, 0);
 
-  // Get the current month's savings goal
   const currentMonthGoal =
     goals.find((goal) => goal.month === getCurrentMonth()) || null;
 
-  // Get category totals for charts
   const getCategoryTotals = (expensesList: Expense[]): CategoryTotal[] => {
     const categoryTotals: { [key: string]: number } = {};
 
@@ -232,7 +227,6 @@ export const BudgetProvider = ({ children }: { children: React.ReactNode }) => {
     }));
   };
 
-  // Filter expenses based on provided filters
   const getFilteredExpenses = (filters: any = {}): Expense[] => {
     let filtered = [...expenses];
 

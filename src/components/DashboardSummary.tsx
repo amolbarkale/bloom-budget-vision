@@ -15,18 +15,12 @@ import { Button } from "@/components/ui/button";
 import SavingsGoalForm from "./SavingsGoalForm";
 
 const DashboardSummary = () => {
-  const { monthlyTotal, currentMonthGoal, addGoal, updateGoal, fetchGoals } =
-    useBudget();
+  const { monthlyTotal, currentMonthGoal, fetchGoals } = useBudget();
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [targetAmount, setTargetAmount] = useState<number>(
     currentMonthGoal?.targetAmount ?? 0
   );
-
-  const getThisMonthKey = () => {
-    const date = new Date();
-    return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`;
-  };
 
   const handleSuccess = async () => {
     setIsDialogOpen(false);
@@ -99,7 +93,6 @@ const DashboardSummary = () => {
                 </DialogHeader>
 
                 <SavingsGoalForm
-                  // pass existing goal (if any) so form pre-fills date + amount
                   goal={currentMonthGoal ?? undefined}
                   onSubmit={handleSuccess}
                   onCancel={() => setIsDialogOpen(false)}

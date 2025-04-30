@@ -27,7 +27,6 @@ const Goals = () => {
     loadData();
   }, []);
 
-  // Prepare UI rendering states to prevent shaking
   const showLoadingState = isLoading && !initialLoaded;
   const showGoalsList = !isLoading && goals.length > 0;
   const showEmptyState = !isLoading && initialLoaded && goals.length === 0;

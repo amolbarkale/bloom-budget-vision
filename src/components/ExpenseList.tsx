@@ -52,12 +52,10 @@ const ExpenseList = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategories, setSelectedCategories] = useState([...categories]);
 
-  // Format date
   const formatDate = (dateString) => {
     return format(new Date(dateString), "MMM d, yyyy");
   };
 
-  // Filtering and sorting
   const filteredExpenses = expenses
     .filter(
       (expense) =>
@@ -79,7 +77,6 @@ const ExpenseList = () => {
       }
     });
 
-  // Handle category toggle
   const toggleCategory = (category) => {
     setSelectedCategories((current) =>
       current.includes(category)
@@ -88,7 +85,6 @@ const ExpenseList = () => {
     );
   };
 
-  // Delete confirmation
   const confirmDelete = (expense) => {
     setSelectedExpense(expense);
     setIsDeleteDialogOpen(true);
@@ -101,7 +97,6 @@ const ExpenseList = () => {
     }
   };
 
-  // Edit expense
   const handleEdit = (expense) => {
     setSelectedExpense(expense);
     setIsEditDialogOpen(true);

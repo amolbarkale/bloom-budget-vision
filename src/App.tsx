@@ -42,7 +42,6 @@ const App = () => (
               <Route path="/profile" element={<Profile />} />
             </Route>
 
-            {/* Catch-all route */}
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BudgetProvider>

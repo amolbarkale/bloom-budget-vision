@@ -29,8 +29,8 @@ const Dashboard = () => {
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
     .slice(0, 5);
 
-  // Prepare UI rendering states to prevent shaking
   const showLoadingState = isLoading && !initialLoaded;
+
   const showEmptyState =
     !isLoading && initialLoaded && recentExpenses.length === 0;
   const showExpenseList = !isLoading && recentExpenses.length > 0;

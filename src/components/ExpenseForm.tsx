@@ -59,7 +59,7 @@ const ExpenseForm = ({
   );
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const { addExpense, updateExpense } = useBudget(); //editExpense will come here
+  const { addExpense, updateExpense } = useBudget();
   const { session } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {

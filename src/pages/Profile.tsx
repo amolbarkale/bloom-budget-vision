@@ -74,7 +74,6 @@ const Profile = () => {
         toast.error(updateErr.message || "Could not update password");
         return;
       }
-
       toast.success("Password updated successfully");
 
       setIsResetDialogOpen(false);

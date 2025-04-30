@@ -23,12 +23,10 @@ const AuthGuard: React.FC<AuthGuardProps> = ({ requireAuth = true }) => {
     );
   }
 
-  // Protected route: must be logged in
   if (requireAuth && !isAuthenticated) {
     return <Navigate to="/login" replace />;
   }
 
-  // Public route: must NOT be logged in
   if (!requireAuth && isAuthenticated) {
     return <Navigate to="/dashboard" replace />;
   }

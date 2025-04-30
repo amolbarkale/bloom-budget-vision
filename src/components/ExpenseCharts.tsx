@@ -43,7 +43,6 @@ const ExpenseCharts = () => {
   const [dateRange, setDateRange] = useState("thisMonth");
   const [chartType, setChartType] = useState("category");
 
-  // Date filtering logic
   const getFilteredExpenses = () => {
     const today = new Date();
     let startDate, endDate;
@@ -95,7 +94,6 @@ const ExpenseCharts = () => {
     }));
   };
 
-  // Prepare data for bar chart
   const getTimeData = () => {
     const dailyTotals = {};
 
