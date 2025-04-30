@@ -1,4 +1,3 @@
-
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Toaster } from "sonner";
@@ -9,7 +8,7 @@ import AuthGuard from "./components/AuthGuard";
 // Import pages
 import Index from "./pages/Index";
 import Login from "./pages/Login";
-import Register from "./pages/Register";
+import SignUp from "./pages/SignUp";
 import Dashboard from "./pages/Dashboard";
 import AddExpense from "./pages/AddExpense";
 import History from "./pages/History";
@@ -31,9 +30,9 @@ const App = () => (
             <Route element={<AuthGuard requireAuth={false} />}>
               <Route path="/" element={<Index />} />
               <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
+              <Route path="/register" element={<SignUp />} />
             </Route>
-            
+
             {/* Protected routes (redirect to login if not authenticated) */}
             <Route element={<AuthGuard requireAuth={true} />}>
               <Route path="/dashboard" element={<Dashboard />} />
@@ -43,7 +42,7 @@ const App = () => (
               <Route path="/visualize" element={<Visualize />} />
               <Route path="/profile" element={<Profile />} />
             </Route>
-            
+
             {/* Catch-all route */}
             <Route path="*" element={<NotFound />} />
           </Routes>

@@ -1,12 +1,15 @@
-
-import { Navigate, Outlet } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
+import { Navigate, Outlet } from "react-router-dom";
+import { useAuth } from "@/context/AuthContext";
 
 interface AuthGuardProps {
+  /**
+   * If true, route is protected (only for authenticated users).
+   * If false, route is public (redirects _away_ if user is already authenticated).
+   */
   requireAuth?: boolean;
 }
 
-const AuthGuard = ({ requireAuth = true }: AuthGuardProps) => {
+const AuthGuard: React.FC<AuthGuardProps> = ({ requireAuth = true }) => {
   const { isAuthenticated, isLoading } = useAuth();
 
   if (isLoading) {
@@ -20,12 +23,12 @@ const AuthGuard = ({ requireAuth = true }: AuthGuardProps) => {
     );
   }
 
-  // For protected routes
+  // Protected route: must be logged in
   if (requireAuth && !isAuthenticated) {
     return <Navigate to="/login" replace />;
   }
 
-  // For public routes that should redirect if already authenticated (login, register)
+  // Public route: must NOT be logged in
   if (!requireAuth && isAuthenticated) {
     return <Navigate to="/dashboard" replace />;
   }
