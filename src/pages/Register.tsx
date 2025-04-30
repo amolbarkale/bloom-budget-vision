@@ -1,0 +1,166 @@
+
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+
+const Register = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [errors, setErrors] = useState({
+    email: '',
+    password: '',
+    confirmPassword: '',
+  });
+  
+  const { register, isLoading } = useAuth();
+
+  const validateForm = () => {
+    let valid = true;
+    const newErrors = { 
+      email: '', 
+      password: '', 
+      confirmPassword: '' 
+    };
+
+    if (!email) {
+      newErrors.email = 'Email is required';
+      valid = false;
+    } else if (!/\S+@\S+\.\S+/.test(email)) {
+      newErrors.email = 'Email is invalid';
+      valid = false;
+    }
+
+    if (!password) {
+      newErrors.password = 'Password is required';
+      valid = false;
+    } else if (password.length < 6) {
+      newErrors.password = 'Password must be at least 6 characters';
+      valid = false;
+    }
+
+    if (!confirmPassword) {
+      newErrors.confirmPassword = 'Please confirm your password';
+      valid = false;
+    } else if (password !== confirmPassword) {
+      newErrors.confirmPassword = 'Passwords do not match';
+      valid = false;
+    }
+
+    setErrors(newErrors);
+    return valid;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    if (validateForm()) {
+      await register(email, password);
+    }
+  };
+
+  return (
+    <div className="min-h-screen flex items-center justify-center px-4 py-12 bg-muted/30">
+      <div className="w-full max-w-md">
+        <div className="text-center mb-8">
+          <h1 className="text-3xl font-bold text-budget-primary">BudgetBloom</h1>
+          <p className="text-muted-foreground mt-2">
+            Track your finances, visualize your spending
+          </p>
+        </div>
+        
+        <Card className="animate-fade-in">
+          <CardHeader>
+            <CardTitle>Create your account</CardTitle>
+            <CardDescription>
+              Start tracking your expenses and saving more today
+            </CardDescription>
+          </CardHeader>
+          
+          <CardContent>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="space-y-2">
+                <label htmlFor="email" className="block text-sm font-medium">
+                  Email
+                </label>
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="your@email.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className={errors.email ? 'border-destructive' : ''}
+                />
+                {errors.email && (
+                  <p className="text-destructive text-xs mt-1">{errors.email}</p>
+                )}
+              </div>
+
+              <div className="space-y-2">
+                <label htmlFor="password" className="block text-sm font-medium">
+                  Password
+                </label>
+                <Input
+                  id="password"
+                  type="password"
+                  placeholder="••••••••"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className={errors.password ? 'border-destructive' : ''}
+                />
+                {errors.password && (
+                  <p className="text-destructive text-xs mt-1">{errors.password}</p>
+                )}
+              </div>
+
+              <div className="space-y-2">
+                <label htmlFor="confirmPassword" className="block text-sm font-medium">
+                  Confirm Password
+                </label>
+                <Input
+                  id="confirmPassword"
+                  type="password"
+                  placeholder="••••••••"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  className={errors.confirmPassword ? 'border-destructive' : ''}
+                />
+                {errors.confirmPassword && (
+                  <p className="text-destructive text-xs mt-1">{errors.confirmPassword}</p>
+                )}
+              </div>
+
+              <Button 
+                type="submit" 
+                className="w-full" 
+                disabled={isLoading}
+              >
+                {isLoading ? 'Creating account...' : 'Create account'}
+              </Button>
+            </form>
+          </CardContent>
+          
+          <CardFooter className="flex justify-center">
+            <p className="text-sm text-center text-muted-foreground">
+              Already have an account?{' '}
+              <Link to="/login" className="text-primary hover:underline">
+                Sign in
+              </Link>
+            </p>
+          </CardFooter>
+        </Card>
+        
+        <div className="mt-8 text-center text-xs text-muted-foreground">
+          <p>
+            &copy; {new Date().getFullYear()} BudgetBloom. All rights reserved.
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Register;

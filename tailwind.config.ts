@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -61,6 +62,22 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+				budget: {
+					primary: '#4CAF50',
+					primaryLight: '#81C784',
+					secondary: '#1976D2',
+					secondaryLight: '#64B5F6',
+					warning: '#FF9800',
+					danger: '#F44336',
+					success: '#4CAF50',
+					info: '#2196F3',
+					food: '#FF5722',
+					transport: '#2196F3',
+					entertainment: '#9C27B0',
+					shopping: '#FFC107',
+					health: '#4CAF50',
+					other: '#607D8B'
 				}
 			},
 			borderRadius: {
@@ -84,11 +101,21 @@ export default {
 					to: {
 						height: '0'
 					}
+				},
+				'fade-in': {
+					'0%': { opacity: '0' },
+					'100%': { opacity: '1' }
+				},
+				'fade-out': {
+					'0%': { opacity: '1' },
+					'100%': { opacity: '0' }
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'fade-in': 'fade-in 0.3s ease-out',
+				'fade-out': 'fade-out 0.3s ease-out'
 			}
 		}
 	},
