@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { supabase } from "@/lib/supabaseClient";
+import { toast } from "sonner";
 import { useAuth } from "../context/AuthContext";
 import MainNav from "../components/MainNav";
 import { Button } from "@/components/ui/button";
@@ -22,32 +24,69 @@ import {
 const Profile = () => {
   const { user, signOut } = useAuth();
   const [isResetDialogOpen, setIsResetDialogOpen] = useState(false);
+
   const [email, setEmail] = useState("");
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isSaving, setIsSaving] = useState(false);
 
-  const handleResetPassword = async (e) => {
+  const handleResetPassword = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    if (!currentPassword.trim()) {
+      toast.error("Please enter your current password");
+      return;
+    }
+
     if (newPassword !== confirmPassword) {
-      // Add toast notification here
+      toast.error("New passwords don’t match");
+      return;
+    }
+
+    if (newPassword.length < 6) {
+      toast.error("New password must be at least 6 characters");
+      return;
+    }
+
+    if (newPassword === currentPassword) {
+      toast.error("New password must be different from the current one");
       return;
     }
 
     setIsSaving(true);
+    try {
+      const { error: signInErr } = await supabase.auth.signInWithPassword({
+        email: user?.email || "",
+        password: currentPassword,
+      });
 
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+      if (signInErr) {
+        toast.error("Current password is incorrect");
+        return;
+      }
 
-    setIsResetDialogOpen(false);
-    setCurrentPassword("");
-    setNewPassword("");
-    setConfirmPassword("");
-    setIsSaving(false);
+      const { error: updateErr } = await supabase.auth.updateUser({
+        password: newPassword,
+      });
 
-    // Add toast notification for success
+      if (updateErr) {
+        toast.error(updateErr.message || "Could not update password");
+        return;
+      }
+
+      toast.success("Password updated successfully");
+
+      setIsResetDialogOpen(false);
+      setCurrentPassword("");
+      setNewPassword("");
+      setConfirmPassword("");
+    } catch (err: any) {
+      console.error("Unexpected error in reset flow:", err);
+      toast.error(err.message || "Something went wrong");
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   return (

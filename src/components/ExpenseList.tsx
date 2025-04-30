@@ -58,7 +58,6 @@ const ExpenseList = () => {
   };
 
   // Filtering and sorting
-  console.log("ExpenseList expenses:", expenses);
   const filteredExpenses = expenses
     .filter(
       (expense) =>
