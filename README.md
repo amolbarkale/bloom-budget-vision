@@ -1,7 +1,7 @@
 <div align="center">
   <br />
-    <a href="https://test.sqa.gameopedia.com" target="_blank">
-      <img src="/images/budget-bloom-banner.jpg" alt="Project Banner">
+    <a href="https://bloom-budget-vision.vercel.app" target="_blank">
+      <img src="./budget-bloom-banner.jpg" alt="Project Banner">
     </a>
   <br />
 
@@ -15,7 +15,7 @@
 
   <h3 align="center">The BudgetBloom</h3>
   <div align="center">
-     Contribute to this project step by step or explore it with following steps, Happy Coding!
+     Contribute to this project or explore with following steps, Happy Coding!
   </div>
 </div>
 
