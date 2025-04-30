@@ -4,7 +4,7 @@
       <img src="/public/budget-bloom-banner.jpg" alt="Project Banner">
     </a>
   <br />
-
+  <br />
   <div>
     <img src="https://img.shields.io/badge/-React_JS-61DAFB?style=for-the-badge&logo=react&logoColor=white" alt="react" />
     <img src="https://img.shields.io/badge/-TypeScript-black?style=for-the-badge&logoColor=white&logo=typescript&color=3178C6" alt="typescript" />
@@ -12,8 +12,6 @@
     <img src="https://img.shields.io/badge/-Tailwind_CSS-black?style=for-the-badge&logoColor=white&logo=tailwindcss&color=06B6D4" alt="tailwindcss" />
 
   </div>
-
-<br/>
 
   <h3 align="center">The BudgetBloom</h3>
   <div align="center">
