@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { format, subDays, parseISO, startOfMonth, endOfMonth } from 'date-fns';
 import { PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
@@ -7,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import CategoryIcon from './CategoryIcon';
+import CustomChartTooltip from './CustomChartTooltip';
 
 const dateRanges = [
   { label: 'Last 7 days', value: '7days' },
@@ -118,19 +118,6 @@ const ExpenseCharts = () => {
     }).format(amount);
   };
 
-  // Custom tooltip for bar chart
-  const CustomTooltip = ({ active, payload }) => {
-    if (active && payload && payload.length) {
-      return (
-        <div className="bg-background border border-border p-2 rounded-md shadow-md">
-          <p className="font-medium">{payload[0].payload.date}</p>
-          <p className="text-budget-primary">{formatCurrency(payload[0].value)}</p>
-        </div>
-      );
-    }
-    return null;
-  };
-
   return (
     <div className="space-y-4">
       {/* Filters */}
@@ -183,7 +170,7 @@ const ExpenseCharts = () => {
                             <Cell key={`cell-${index}`} fill={categoryColors[entry.name]} />
                           ))}
                         </Pie>
-                        <Tooltip formatter={(value) => formatCurrency(value)} />
+                        <Tooltip content={<CustomChartTooltip />} />
                       </PieChart>
                     </ResponsiveContainer>
                   </div>
@@ -233,7 +220,7 @@ const ExpenseCharts = () => {
                       <CartesianGrid strokeDasharray="3 3" opacity={0.2} />
                       <XAxis dataKey="date" />
                       <YAxis tickFormatter={formatCurrency} />
-                      <Tooltip content={<CustomTooltip />} />
+                      <Tooltip content={<CustomChartTooltip />} />
                       <Bar dataKey="amount" fill="hsl(var(--primary))" />
                     </BarChart>
                   </ResponsiveContainer>
