@@ -10,7 +10,7 @@ const History = () => {
 
   useEffect(() => {
     fetchExpenses();
-  }, [fetchExpenses]);
+  }, []);
 
   return (
     <div className="min-h-screen bg-background">

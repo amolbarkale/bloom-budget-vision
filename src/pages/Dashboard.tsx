@@ -23,7 +23,7 @@ const Dashboard = () => {
     };
     
     loadData();
-  }, [fetchExpenses]);
+  }, []);
 
   // Get recent expenses (last 5)
   const recentExpenses = [...expenses]
