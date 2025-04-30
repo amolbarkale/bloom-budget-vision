@@ -13,6 +13,8 @@
 
   </div>
 
+<br/>
+
   <h3 align="center">The BudgetBloom</h3>
   <div align="center">
      Contribute to this project or explore with following steps, Happy Coding!
