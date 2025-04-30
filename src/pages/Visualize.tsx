@@ -2,6 +2,7 @@
 import MainNav from '../components/MainNav';
 import ExpenseCharts from '../components/ExpenseCharts';
 import { Card, CardContent } from '@/components/ui/card';
+import CustomChartTooltip from '../components/CustomChartTooltip';
 
 const Visualize = () => {
   return (
