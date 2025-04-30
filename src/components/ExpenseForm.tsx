@@ -99,7 +99,7 @@ const ExpenseForm = ({ expense, onSubmit, onCancel }: ExpenseFormProps) => {
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
         <label htmlFor="amount" className="block text-sm font-medium mb-1">
-          Amount ($) *
+          Amount (₹) *
         </label>
         <Input
           id="amount"

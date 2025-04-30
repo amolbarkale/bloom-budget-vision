@@ -1,16 +1,15 @@
-
-import { useState, useEffect } from 'react';
-import { format } from 'date-fns';
-import { Calendar } from '@/components/ui/calendar';
+import { useState, useEffect } from "react";
+import { format } from "date-fns";
+import { Calendar } from "@/components/ui/calendar";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '@/components/ui/popover';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { CalendarIcon } from 'lucide-react';
-import { useBudget } from '../context/BudgetContext';
+} from "@/components/ui/popover";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { CalendarIcon } from "lucide-react";
+import { useBudget } from "../context/BudgetContext";
 
 interface SavingsGoalFormProps {
   goal?: {
@@ -23,20 +22,18 @@ interface SavingsGoalFormProps {
   isEdit?: boolean;
 }
 
-const SavingsGoalForm = ({ 
-  goal, 
-  onSubmit, 
+const SavingsGoalForm = ({
+  goal,
+  onSubmit,
   onCancel,
-  isEdit = false 
+  isEdit = false,
 }: SavingsGoalFormProps) => {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(
-    goal ? new Date(goal.month + '-01') : undefined
+    goal ? new Date(goal.month + "-01") : undefined
   );
-  
-  const [monthStr, setMonthStr] = useState(
-    goal ? goal.month : ''
-  );
-  
+
+  const [monthStr, setMonthStr] = useState(goal ? goal.month : "");
+
   const [targetAmount, setTargetAmount] = useState(
     goal ? goal.targetAmount : 0
   );
@@ -46,19 +43,19 @@ const SavingsGoalForm = ({
   // Update monthStr when selectedDate changes
   useEffect(() => {
     if (selectedDate) {
-      const month = format(selectedDate, 'yyyy-MM');
+      const month = format(selectedDate, "yyyy-MM");
       setMonthStr(month);
     }
   }, [selectedDate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!monthStr) return;
-    
+
     const goalData = {
       month: monthStr,
-      targetAmount: Number(targetAmount)
+      targetAmount: Number(targetAmount),
     };
 
     try {
@@ -69,7 +66,7 @@ const SavingsGoalForm = ({
       }
       onSubmit();
     } catch (error) {
-      console.error('Error saving goal:', error);
+      console.error("Error saving goal:", error);
     }
   };
 
@@ -86,7 +83,9 @@ const SavingsGoalForm = ({
               className="w-full justify-start text-left font-normal"
             >
               <CalendarIcon className="mr-2 h-4 w-4" />
-              {selectedDate ? format(selectedDate, 'MMMM yyyy') : 'Select month'}
+              {selectedDate
+                ? format(selectedDate, "MMMM yyyy")
+                : "Select month"}
             </Button>
           </PopoverTrigger>
           <PopoverContent className="w-auto p-0 pointer-events-auto">
@@ -102,8 +101,11 @@ const SavingsGoalForm = ({
       </div>
 
       <div>
-        <label htmlFor="targetAmount" className="block text-sm font-medium mb-1">
-          Target Amount ($) *
+        <label
+          htmlFor="targetAmount"
+          className="block text-sm font-medium mb-1"
+        >
+          Target Amount (₹) *
         </label>
         <Input
           id="targetAmount"
@@ -120,19 +122,12 @@ const SavingsGoalForm = ({
 
       <div className="flex justify-end space-x-2">
         {onCancel && (
-          <Button 
-            type="button" 
-            variant="outline" 
-            onClick={onCancel}
-          >
+          <Button type="button" variant="outline" onClick={onCancel}>
             Cancel
           </Button>
         )}
-        <Button 
-          type="submit" 
-          disabled={!selectedDate}
-        >
-          {isEdit ? 'Update Goal' : 'Add Goal'}
+        <Button type="submit" disabled={!selectedDate}>
+          {isEdit ? "Update Goal" : "Add Goal"}
         </Button>
       </div>
     </form>
