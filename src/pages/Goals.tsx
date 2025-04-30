@@ -15,12 +15,23 @@ import {
 } from '@/components/ui/dialog';
 
 const Goals = () => {
-  const { fetchGoals, isLoading } = useBudget();
+  const { fetchGoals, isLoading, goals } = useBudget();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [initialLoaded, setInitialLoaded] = useState(false);
 
   useEffect(() => {
-    fetchGoals();
+    const loadData = async () => {
+      await fetchGoals();
+      setInitialLoaded(true);
+    };
+    
+    loadData();
   }, [fetchGoals]);
+
+  // Prepare UI rendering states to prevent shaking
+  const showLoadingState = isLoading && !initialLoaded;
+  const showGoalsList = !isLoading && goals.length > 0;
+  const showEmptyState = !isLoading && initialLoaded && goals.length === 0;
 
   const handleSuccess = () => {
     setIsDialogOpen(false);
@@ -52,13 +63,17 @@ const Goals = () => {
         
         <Card>
           <CardContent className="p-4">
-            {isLoading ? (
+            {showLoadingState ? (
               <div className="text-center py-8 text-muted-foreground">
                 Loading savings goals...
               </div>
-            ) : (
+            ) : showEmptyState ? (
+              <div className="text-center py-8 text-muted-foreground">
+                No savings goals yet. Add your first goal to start tracking your progress.
+              </div>
+            ) : showGoalsList ? (
               <SavingsGoalList />
-            )}
+            ) : null}
           </CardContent>
         </Card>
       </div>

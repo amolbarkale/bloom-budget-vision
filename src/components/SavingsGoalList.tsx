@@ -64,76 +64,70 @@ const SavingsGoalList = () => {
 
   return (
     <div className="space-y-4">
-      {sortedGoals.length === 0 ? (
-        <div className="text-center py-8 text-muted-foreground">
-          No savings goals yet. Add your first goal to start tracking your progress.
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {sortedGoals.map((goal) => {
-            const spentAmount = calculateSpentForMonth(goal.month);
-            const savedAmount = goal.targetAmount - spentAmount;
-            const progress = Math.min(100, Math.max(0, (savedAmount / goal.targetAmount) * 100));
-            
-            const isCurrentOrFuture = new Date(goal.month + '-01') >= new Date(new Date().setDate(1));
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {sortedGoals.map((goal) => {
+          const spentAmount = calculateSpentForMonth(goal.month);
+          const savedAmount = goal.targetAmount - spentAmount;
+          const progress = Math.min(100, Math.max(0, (savedAmount / goal.targetAmount) * 100));
+          
+          const isCurrentOrFuture = new Date(goal.month + '-01') >= new Date(new Date().setDate(1));
 
-            return (
-              <Card key={goal.id} className="animate-fade-in">
-                <CardHeader>
-                  <div className="flex justify-between items-center">
-                    <CardTitle className="text-lg">
-                      {format(new Date(goal.month + '-01'), 'MMMM yyyy')}
-                    </CardTitle>
-                    <span className="font-semibold">
-                      {formatCurrency(goal.targetAmount)}
-                    </span>
-                  </div>
-                </CardHeader>
+          return (
+            <Card key={goal.id} className="animate-fade-in">
+              <CardHeader>
+                <div className="flex justify-between items-center">
+                  <CardTitle className="text-lg">
+                    {format(new Date(goal.month + '-01'), 'MMMM yyyy')}
+                  </CardTitle>
+                  <span className="font-semibold">
+                    {formatCurrency(goal.targetAmount)}
+                  </span>
+                </div>
+              </CardHeader>
+              
+              <CardContent className="space-y-2">
+                <div className="flex justify-between text-sm">
+                  <span className="text-muted-foreground">Progress:</span>
+                  <span className={savedAmount >= 0 ? 'text-budget-success' : 'text-budget-danger'}>
+                    {formatCurrency(savedAmount)} saved
+                  </span>
+                </div>
                 
-                <CardContent className="space-y-2">
-                  <div className="flex justify-between text-sm">
-                    <span className="text-muted-foreground">Progress:</span>
-                    <span className={savedAmount >= 0 ? 'text-budget-success' : 'text-budget-danger'}>
-                      {formatCurrency(savedAmount)} saved
-                    </span>
-                  </div>
-                  
-                  <Progress value={progress} className="h-2" />
-                  
-                  <div className="flex justify-between text-sm text-muted-foreground">
-                    <span>
-                      {savedAmount >= 0 
-                        ? `${progress.toFixed(0)}% of goal` 
-                        : 'Over budget'}
-                    </span>
-                    <span>
-                      {formatCurrency(spentAmount)} spent
-                    </span>
-                  </div>
-                </CardContent>
+                <Progress value={progress} className="h-2" />
                 
-                <CardFooter className="flex justify-end">
-                  <Button 
-                    variant="ghost" 
-                    size="sm" 
-                    onClick={() => handleEdit(goal)}
-                  >
-                    <Edit2 size={16} className="mr-1" /> Edit
-                  </Button>
-                  <Button 
-                    variant="ghost" 
-                    size="sm" 
-                    onClick={() => confirmDelete(goal)}
-                    className="text-destructive hover:text-destructive/90"
-                  >
-                    <Trash2 size={16} className="mr-1" /> Delete
-                  </Button>
-                </CardFooter>
-              </Card>
-            );
-          })}
-        </div>
-      )}
+                <div className="flex justify-between text-sm text-muted-foreground">
+                  <span>
+                    {savedAmount >= 0 
+                      ? `${progress.toFixed(0)}% of goal` 
+                      : 'Over budget'}
+                  </span>
+                  <span>
+                    {formatCurrency(spentAmount)} spent
+                  </span>
+                </div>
+              </CardContent>
+              
+              <CardFooter className="flex justify-end">
+                <Button 
+                  variant="ghost" 
+                  size="sm" 
+                  onClick={() => handleEdit(goal)}
+                >
+                  <Edit2 size={16} className="mr-1" /> Edit
+                </Button>
+                <Button 
+                  variant="ghost" 
+                  size="sm" 
+                  onClick={() => confirmDelete(goal)}
+                  className="text-destructive hover:text-destructive/90"
+                >
+                  <Trash2 size={16} className="mr-1" /> Delete
+                </Button>
+              </CardFooter>
+            </Card>
+          );
+        })}
+      </div>
 
       {/* Edit Dialog */}
       <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
