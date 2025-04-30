@@ -1,73 +1,124 @@
-# Welcome to your Lovable project
+<div align="center">
+  <br />
+    <a href="https://test.sqa.gameopedia.com" target="_blank">
+      <img src="/images/img_project_banner.webp" alt="Project Banner">
+    </a>
+  <br />
 
-## Project info
+  <div>
+    <img src="https://img.shields.io/badge/-Next_JS-black?style=for-the-badge&logoColor=white&logo=nextdotjs&color=000000" alt="nextjs" />
+    <img src="https://img.shields.io/badge/-TypeScript-black?style=for-the-badge&logoColor=white&logo=typescript&color=3178C6" alt="typescript" />
+    <img src="https://img.shields.io/badge/-GraphQL-black?style=for-the-badge&logoColor=white&logo=graphql&color=E10098" alt="graphql" />
+    <img src="https://img.shields.io/badge/-AWS_Cognito-black?style=for-the-badge&logoColor=white&logo=amazonaws&color=FF9900" alt="aws cognito" />
+    <img src="https://img.shields.io/badge/-Tailwind_CSS-black?style=for-the-badge&logoColor=white&logo=tailwindcss&color=06B6D4" alt="tailwindcss" />
+    <img src="https://img.shields.io/badge/-ShadCN_UI-black?style=for-the-badge&logoColor=white&logo=shadcnui&color=000000" alt="shadcnui" />
+  </div>
 
-**URL**: https://lovable.dev/projects/85d9db39-a1ac-43fb-8c6b-6893898a37f7
+  <h3 align="center">The Lumos</h3>
+  <div align="center">
+     Build this project step by step or explore it with following steps, Happy Coding!
+  </div>
+</div>
+<br/>
 
-## How can I edit this code?
+## 📋 <a name="table">Table of Contents</a>
 
-There are several ways of editing your application.
+1. 🤖 [Introduction](#introduction)
+2. ⚙️ [Tech Stack](#tech-stack)
+3. 🔋 [Features](#features)
+4. 🤸 [Quick Start](#quick-start)
 
-**Use Lovable**
+---
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/85d9db39-a1ac-43fb-8c6b-6893898a37f7) and start prompting.
+## <a name="introduction">🤖 Introduction</a>
 
-Changes made via Lovable will be committed automatically to this repo.
+**BudgetBloom** is a clean, focused personal budgeting platform that helps users track daily expenses, set monthly savings goals, and visually understand where their money is going—category by category.
 
-**Use your preferred IDE**
+You’re tasked with building an elegant, secure MVP for this financial self-awareness platform.
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+## <a name="tech-stack">⚙️ Tech Stack</a>
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
-
-**Edit a file directly in GitHub**
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
+- Zod
+- Supabase SDKs for Databse access
+- ShadCN UI
 - TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+- TailwindCSS
 
-## How can I deploy this project?
+## <a name="features">🔋 Features</a>
 
-Simply open [Lovable](https://lovable.dev/projects/85d9db39-a1ac-43fb-8c6b-6893898a37f7) and click on Share -> Publish.
+👉 **Authentication**: 
 
-## Can I connect a custom domain to my Lovable project?
+👉 **Home Page**: 
 
-Yes, you can!
+👉 **Feature (Tag) Breakdown**: 
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+👉 **User Management**: 
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+👉 **Data Science Processed Data**: 
+
+👉 **Modern UI**: 
+
+👉 **Game/Feature Details**: 
+
+👉 **Game Category Finder**: 
+
+👉 **Tags Overlay**: 
+
+👉 **Global Search**: 
+
+👉 **Responsive Design**: 
+
+and many more...
+
+## <a name="quick-start">🤸 Quick Start</a>
+
+Follow these steps to set up the project locally on your machine.
+
+**Prerequisites**
+
+Make sure you have the following installed on your machine:
+
+- [Git](https://git-scm.com/)
+- [Node.js](https://nodejs.org/en) - version 18
+- [npm](https://www.npmjs.com/) (Node Package Manager)
+
+**Steps to Set Up**
+
+1. **Install Node.js (Version 18)**
+   Ensure that Node.js version 18 is installed on your machine. You can download it from the [Node.js official website](https://nodejs.org/).
+
+2. **Clone the Repository**
+   Run the following commands to clone the repository and navigate to the project folder:
+
+   ```bash
+   git clone https://github.com/gop-git/quest_arcade_app.git
+   cd quest_arcade_app
+   git checkout main
+   ```
+
+3. **Install Project Dependencies**
+   Install all the necessary dependencies for the project:
+
+   ```bash
+   npm install
+   ```
+
+4. **Set Up Environment Variables**
+   Find the `.env` file from project developers and place it in the root directory of the project. You can refere `.env.example` for your referance
+
+5. **Run the Development Server**
+   Start the development server with the following command:
+
+   ```bash
+   npm run dev
+   ```
+
+6. **Access the Application**
+   Open your browser and navigate to:
+
+   [http://localhost:3000](http://localhost:3000)
+
+7. **Whitelist Your IP Address**
+   If you are working from home, ensure that your IP address is whitelisted to fetch SMA queries and DS APIs.
+
+---
