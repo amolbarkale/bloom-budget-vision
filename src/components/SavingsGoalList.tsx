@@ -1,38 +1,36 @@
-
-import { useState } from 'react';
-import { format, parseISO } from 'date-fns';
-import { Edit2, Trash2 } from 'lucide-react';
-import { useBudget } from '../context/BudgetContext';
-import { Button } from '@/components/ui/button';
+import { useState } from "react";
+import { format, parseISO } from "date-fns";
+import { Edit2, Trash2 } from "lucide-react";
+import { useBudget } from "../context/BudgetContext";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from '@/components/ui/dialog';
-import { Progress } from '@/components/ui/progress';
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import SavingsGoalForm from './SavingsGoalForm';
+} from "@/components/ui/dialog";
+import { Progress } from "@/components/ui/progress";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import SavingsGoalForm from "./SavingsGoalForm";
+import { formatCurrency } from "@/helpers";
 
 const SavingsGoalList = () => {
   const { goals, expenses, deleteGoal } = useBudget();
   const [selectedGoal, setSelectedGoal] = useState(null);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
-  
-  // Format currency
-  const formatCurrency = (amount) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD'
-    }).format(amount);
-  };
 
   // Calculate spent amount for a specific month
   const calculateSpentForMonth = (month) => {
     return expenses
-      .filter(expense => {
-        const expenseMonth = format(parseISO(expense.date), 'yyyy-MM');
+      .filter((expense) => {
+        const expenseMonth = format(parseISO(expense.date), "yyyy-MM");
         return expenseMonth === month;
       })
       .reduce((total, expense) => total + expense.amount, 0);
@@ -68,56 +66,64 @@ const SavingsGoalList = () => {
         {sortedGoals.map((goal) => {
           const spentAmount = calculateSpentForMonth(goal.month);
           const savedAmount = goal.targetAmount - spentAmount;
-          const progress = Math.min(100, Math.max(0, (savedAmount / goal.targetAmount) * 100));
-          
-          const isCurrentOrFuture = new Date(goal.month + '-01') >= new Date(new Date().setDate(1));
+          const progress = Math.min(
+            100,
+            Math.max(0, (savedAmount / goal.targetAmount) * 100)
+          );
+
+          const isCurrentOrFuture =
+            new Date(goal.month + "-01") >= new Date(new Date().setDate(1));
 
           return (
             <Card key={goal.id} className="animate-fade-in">
               <CardHeader>
                 <div className="flex justify-between items-center">
                   <CardTitle className="text-lg">
-                    {format(new Date(goal.month + '-01'), 'MMMM yyyy')}
+                    {format(new Date(goal.month + "-01"), "MMMM yyyy")}
                   </CardTitle>
                   <span className="font-semibold">
                     {formatCurrency(goal.targetAmount)}
                   </span>
                 </div>
               </CardHeader>
-              
+
               <CardContent className="space-y-2">
                 <div className="flex justify-between text-sm">
                   <span className="text-muted-foreground">Progress:</span>
-                  <span className={savedAmount >= 0 ? 'text-budget-success' : 'text-budget-danger'}>
+                  <span
+                    className={
+                      savedAmount >= 0
+                        ? "text-budget-success"
+                        : "text-budget-danger"
+                    }
+                  >
                     {formatCurrency(savedAmount)} saved
                   </span>
                 </div>
-                
+
                 <Progress value={progress} className="h-2" />
-                
+
                 <div className="flex justify-between text-sm text-muted-foreground">
                   <span>
-                    {savedAmount >= 0 
-                      ? `${progress.toFixed(0)}% of goal` 
-                      : 'Over budget'}
+                    {savedAmount >= 0
+                      ? `${progress.toFixed(0)}% of goal`
+                      : "Over budget"}
                   </span>
-                  <span>
-                    {formatCurrency(spentAmount)} spent
-                  </span>
+                  <span>{formatCurrency(spentAmount)} spent</span>
                 </div>
               </CardContent>
-              
+
               <CardFooter className="flex justify-end">
-                <Button 
-                  variant="ghost" 
-                  size="sm" 
+                <Button
+                  variant="ghost"
+                  size="sm"
                   onClick={() => handleEdit(goal)}
                 >
                   <Edit2 size={16} className="mr-1" /> Edit
                 </Button>
-                <Button 
-                  variant="ghost" 
-                  size="sm" 
+                <Button
+                  variant="ghost"
+                  size="sm"
                   onClick={() => confirmDelete(goal)}
                   className="text-destructive hover:text-destructive/90"
                 >
@@ -160,10 +166,7 @@ const SavingsGoalList = () => {
             >
               Cancel
             </Button>
-            <Button 
-              variant="destructive" 
-              onClick={handleDelete}
-            >
+            <Button variant="destructive" onClick={handleDelete}>
               Delete
             </Button>
           </div>

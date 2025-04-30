@@ -1,47 +1,46 @@
-
-import { useState } from 'react';
-import { format } from 'date-fns';
-import { Edit2, Trash2, Filter } from 'lucide-react';
-import { useBudget } from '../context/BudgetContext';
-import { Button } from '@/components/ui/button';
+import { useState } from "react";
+import { format } from "date-fns";
+import { Edit2, Trash2, Filter } from "lucide-react";
+import { useBudget } from "../context/BudgetContext";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/dialog';
+} from "@/components/ui/dialog";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuCheckboxItem,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { Input } from '@/components/ui/input';
-import { 
+} from "@/components/ui/dropdown-menu";
+import { Input } from "@/components/ui/input";
+import {
   Card,
-  CardContent, 
+  CardContent,
   CardFooter,
   CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
-import CategoryIcon from './CategoryIcon';
-import ExpenseForm from './ExpenseForm';
+} from "@/components/ui/card";
+import CategoryIcon from "./CategoryIcon";
+import ExpenseForm from "./ExpenseForm";
+import { formatCurrency } from "@/helpers";
 
 const sortOptions = [
-  { label: 'Newest First', value: 'newest' },
-  { label: 'Oldest First', value: 'oldest' },
-  { label: 'Highest Amount', value: 'highest' },
-  { label: 'Lowest Amount', value: 'lowest' },
+  { label: "Newest First", value: "newest" },
+  { label: "Oldest First", value: "oldest" },
+  { label: "Highest Amount", value: "highest" },
+  { label: "Lowest Amount", value: "lowest" },
 ];
 
 const categories = [
-  'Food', 
-  'Transport', 
-  'Entertainment', 
-  'Shopping', 
-  'Health', 
-  'Other'
+  "Food",
+  "Transport",
+  "Entertainment",
+  "Shopping",
+  "Health",
+  "Other",
 ];
 
 const ExpenseList = () => {
@@ -49,39 +48,33 @@ const ExpenseList = () => {
   const [selectedExpense, setSelectedExpense] = useState(null);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
-  const [sortBy, setSortBy] = useState('newest');
-  const [searchTerm, setSearchTerm] = useState('');
+  const [sortBy, setSortBy] = useState("newest");
+  const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategories, setSelectedCategories] = useState([...categories]);
-  
-  // Format currency
-  const formatCurrency = (amount) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD'
-    }).format(amount);
-  };
-  
+
   // Format date
   const formatDate = (dateString) => {
-    return format(new Date(dateString), 'MMM d, yyyy');
+    return format(new Date(dateString), "MMM d, yyyy");
   };
 
   // Filtering and sorting
+  console.log("ExpenseList expenses:", expenses);
   const filteredExpenses = expenses
-    .filter((expense) => 
-      (selectedCategories.includes(expense.category)) &&
-      (expense.note?.toLowerCase().includes(searchTerm.toLowerCase()) || 
-       expense.category.toLowerCase().includes(searchTerm.toLowerCase()))
+    .filter(
+      (expense) =>
+        selectedCategories.includes(expense.category) &&
+        (expense.note?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          expense.category.toLowerCase().includes(searchTerm.toLowerCase()))
     )
     .sort((a, b) => {
       switch (sortBy) {
-        case 'oldest':
+        case "oldest":
           return new Date(a.date).getTime() - new Date(b.date).getTime();
-        case 'highest':
+        case "highest":
           return b.amount - a.amount;
-        case 'lowest':
+        case "lowest":
           return a.amount - b.amount;
-        case 'newest':
+        case "newest":
         default:
           return new Date(b.date).getTime() - new Date(a.date).getTime();
       }
@@ -128,7 +121,7 @@ const ExpenseList = () => {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" size="sm">
-                <Filter size={16} className="mr-1" /> 
+                <Filter size={16} className="mr-1" />
                 Filter
               </Button>
             </DropdownMenuTrigger>
@@ -151,7 +144,7 @@ const ExpenseList = () => {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" size="sm">
-                Sort: {sortOptions.find(opt => opt.value === sortBy)?.label}
+                Sort: {sortOptions.find((opt) => opt.value === sortBy)?.label}
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-48">
@@ -175,12 +168,14 @@ const ExpenseList = () => {
         </div>
       ) : (
         <div className="space-y-3">
-          {filteredExpenses.map((expense) => (
+          {filteredExpenses?.map((expense) => (
             <Card key={expense.id} className="animate-fade-in">
               <CardHeader className="pb-2">
                 <div className="flex justify-between items-center">
                   <div className="flex items-center">
-                    <span className={`category-badge category-${expense.category}`}>
+                    <span
+                      className={`category-badge category-${expense.category}`}
+                    >
                       <CategoryIcon category={expense.category} size={14} />
                       <span className="ml-1">{expense.category}</span>
                     </span>
@@ -193,24 +188,24 @@ const ExpenseList = () => {
                   </span>
                 </div>
               </CardHeader>
-              
+
               {expense.note && (
                 <CardContent className="py-1">
                   <p className="text-sm">{expense.note}</p>
                 </CardContent>
               )}
-              
+
               <CardFooter className="pt-2 flex justify-end">
-                <Button 
-                  variant="ghost" 
-                  size="sm" 
+                <Button
+                  variant="ghost"
+                  size="sm"
                   onClick={() => handleEdit(expense)}
                 >
                   <Edit2 size={16} className="mr-1" /> Edit
                 </Button>
-                <Button 
-                  variant="ghost" 
-                  size="sm" 
+                <Button
+                  variant="ghost"
+                  size="sm"
                   onClick={() => confirmDelete(expense)}
                   className="text-destructive hover:text-destructive/90"
                 >
@@ -253,10 +248,7 @@ const ExpenseList = () => {
             >
               Cancel
             </Button>
-            <Button 
-              variant="destructive" 
-              onClick={handleDelete}
-            >
+            <Button variant="destructive" onClick={handleDelete}>
               Delete
             </Button>
           </div>

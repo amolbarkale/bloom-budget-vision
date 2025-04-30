@@ -46,7 +46,7 @@ const Goals = () => {
 
           <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
             <DialogTrigger asChild>
-              <Button>New Savings Goal</Button>
+              <Button>Add Savings Goal</Button>
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>

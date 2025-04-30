@@ -45,7 +45,12 @@ const categories = [
   "Other",
 ];
 
-const ExpenseForm = ({ expense, onSubmit, onCancel }: ExpenseFormProps) => {
+const ExpenseForm = ({
+  expense,
+  onSubmit,
+  onCancel,
+  isEdit = false,
+}: ExpenseFormProps) => {
   const [amount, setAmount] = useState(expense ? expense.amount : 0);
   const [category, setCategory] = useState(expense ? expense.category : "Food");
   const [note, setNote] = useState(expense ? expense.note || "" : "");
@@ -54,7 +59,7 @@ const ExpenseForm = ({ expense, onSubmit, onCancel }: ExpenseFormProps) => {
   );
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const { addExpense } = useBudget();
+  const { addExpense, updateExpense } = useBudget(); //editExpense will come here
   const { session } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -85,7 +90,11 @@ const ExpenseForm = ({ expense, onSubmit, onCancel }: ExpenseFormProps) => {
     };
 
     try {
-      await addExpense(expenseData);
+      if (isEdit && expense) {
+        await updateExpense(expense.id, expenseData);
+      } else {
+        await addExpense(expenseData);
+      }
       onSubmit();
     } catch (error) {
       console.error("Error saving expense:", error);
@@ -181,7 +190,13 @@ const ExpenseForm = ({ expense, onSubmit, onCancel }: ExpenseFormProps) => {
           </Button>
         )}
         <Button type="submit">
-          {isSubmitting ? "Adding Expense" : "Add Expense"}
+          {isSubmitting
+            ? isEdit
+              ? "Updating…"
+              : "Adding…"
+            : isEdit
+              ? "Update Expense"
+              : "Add Expense"}
         </Button>
       </div>
     </form>

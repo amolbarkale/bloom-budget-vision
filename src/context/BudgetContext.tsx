@@ -37,6 +37,10 @@ interface BudgetContextType {
   fetchExpenses: (filters?: any) => Promise<void>;
   addExpense: (expense: Omit<Expense, "id" | "userId">) => Promise<void>;
   deleteExpense: (id: string) => Promise<void>;
+  updateExpense: (
+    id: string,
+    data: Omit<Expense, "id" | "user_id">
+  ) => Promise<void>;
   fetchGoals: () => Promise<void>;
   addGoal: (goal: Omit<SavingsGoal, "id" | "userId">) => Promise<void>;
   updateGoal: (id: string, goal: Partial<SavingsGoal>) => Promise<void>;
@@ -51,7 +55,6 @@ const BudgetContext = createContext<BudgetContextType | undefined>(undefined);
 
 export const BudgetProvider = ({ children }: { children: React.ReactNode }) => {
   const [expenses, setExpenses] = useState<Expense[]>([]);
-  console.log("expenses:", expenses);
   const [goals, setGoals] = useState<SavingsGoal[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   // const { token, isAuthenticated } = useAuth();
@@ -71,13 +74,11 @@ export const BudgetProvider = ({ children }: { children: React.ReactNode }) => {
     if (error) {
       toast.error("Failed to load expenses");
     } else {
-      console.log("fetchExpenses:", data);
       setExpenses(data || []);
     }
   };
 
   const addExpense = async (expense: Omit<Expense, "id" | "user_id">) => {
-    console.log("addExpense:", expense);
     if (!userId) return;
     setIsLoading(true);
     const { error } = await supabase
@@ -87,9 +88,30 @@ export const BudgetProvider = ({ children }: { children: React.ReactNode }) => {
     if (error) {
       toast.error("Failed to add expense");
     } else {
-      console.log("Expense added successfully:");
       toast.success("Expense added successfully");
       await fetchExpenses();
+    }
+  };
+
+  const updateExpense = async (
+    id: string,
+    expense: Omit<Expense, "id" | "user_id">
+  ) => {
+    if (!userId) return;
+    setIsLoading(true);
+    const { error } = await supabase
+      .from("expenses")
+      .update({ ...expense, user_id: userId })
+      .eq("id", id);
+    setIsLoading(false);
+
+    if (error) {
+      toast.error("Failed to update expense");
+    } else {
+      toast.success("Expense updated successfully");
+      setExpenses((prev) =>
+        prev.map((e) => (e.id === id ? { ...e, ...expense } : e))
+      );
     }
   };
 
@@ -123,11 +145,14 @@ export const BudgetProvider = ({ children }: { children: React.ReactNode }) => {
 
   const addGoal = async (goal: Omit<SavingsGoal, "id" | "user_id">) => {
     if (!userId) return;
+
     setIsLoading(true);
     const { error } = await supabase
       .from("savings_goals")
       .insert([{ ...goal, user_id: userId }]);
+
     setIsLoading(false);
+
     if (error) {
       toast.error("Failed to add goal");
     } else {
@@ -137,12 +162,17 @@ export const BudgetProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const updateGoal = async (id: string, data: Partial<SavingsGoal>) => {
+    if (!userId) return;
+
     setIsLoading(true);
+
     const { error } = await supabase
       .from("savings_goals")
       .update(data)
       .eq("id", id);
+
     setIsLoading(false);
+
     if (error) {
       toast.error("Failed to update goal");
     } else {
@@ -152,17 +182,22 @@ export const BudgetProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const deleteGoal = async (id: string) => {
+    if (!userId) return;
+
     setIsLoading(true);
+
     const { error } = await supabase
       .from("savings_goals")
       .delete()
       .eq("id", id);
+
     setIsLoading(false);
+
     if (error) {
       toast.error("Failed to delete goal");
     } else {
       toast.success("Savings goal deleted successfully");
-      setGoals((prev) => prev.filter((g) => g.id !== id));
+      await fetchGoals();
     }
   };
 
@@ -237,6 +272,7 @@ export const BudgetProvider = ({ children }: { children: React.ReactNode }) => {
         isLoading,
         fetchExpenses,
         addExpense,
+        updateExpense,
         deleteExpense,
         fetchGoals,
         addGoal,
