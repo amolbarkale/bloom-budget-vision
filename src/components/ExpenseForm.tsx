@@ -21,7 +21,6 @@ import { CalendarIcon } from "lucide-react";
 import { useBudget } from "../context/BudgetContext";
 import CategoryIcon from "./CategoryIcon";
 import { useAuth } from "@/context/AuthContext";
-import console from "console";
 
 interface ExpenseFormProps {
   expense?: {
@@ -81,12 +80,20 @@ const ExpenseForm = ({
 
     setIsSubmitting(true);
 
+    // handles UTC time mismatch for frst day of every month
+    const onlyDate = new Date(date);
+    onlyDate.setHours(0, 0, 0, 0);
+
+    const isoString = new Date(
+      onlyDate.getTime() - onlyDate.getTimezoneOffset() * 60000
+    ).toISOString();
+
     const expenseData = {
       amount: Number(amount),
       user_id: session.user.id,
       category: category as any,
       note: note || undefined,
-      date: date.toISOString(),
+      date: isoString,
     };
 
     try {
