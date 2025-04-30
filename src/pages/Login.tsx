@@ -113,12 +113,12 @@ const Login = () => {
                   >
                     Password
                   </label>
-                  <Link
+                  {/* <Link
                     to="/reset-password"
                     className="text-xs text-primary hover:underline"
                   >
                     Forgot password?
-                  </Link>
+                  </Link> */}
                 </div>
                 <Input
                   id="password"
