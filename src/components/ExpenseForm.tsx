@@ -1,26 +1,27 @@
-
-import { useState } from 'react';
-import { format } from 'date-fns';
-import { Calendar } from '@/components/ui/calendar';
+import { useState } from "react";
+import { format } from "date-fns";
+import { Calendar } from "@/components/ui/calendar";
+import { toast } from "sonner";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '@/components/ui/popover';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
+} from "@/components/ui/popover";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-import { CalendarIcon } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import { useBudget } from '../context/BudgetContext';
-import CategoryIcon from './CategoryIcon';
+} from "@/components/ui/select";
+import { CalendarIcon } from "lucide-react";
+import { useBudget } from "../context/BudgetContext";
+import CategoryIcon from "./CategoryIcon";
+import { useAuth } from "@/context/AuthContext";
+import console from "console";
 
 interface ExpenseFormProps {
   expense?: {
@@ -36,48 +37,61 @@ interface ExpenseFormProps {
 }
 
 const categories = [
-  'Food', 
-  'Transport', 
-  'Entertainment', 
-  'Shopping', 
-  'Health', 
-  'Other'
+  "Food",
+  "Transport",
+  "Entertainment",
+  "Shopping",
+  "Health",
+  "Other",
 ];
 
-const ExpenseForm = ({ 
-  expense, 
-  onSubmit, 
-  onCancel,
-  isEdit = false 
-}: ExpenseFormProps) => {
+const ExpenseForm = ({ expense, onSubmit, onCancel }: ExpenseFormProps) => {
   const [amount, setAmount] = useState(expense ? expense.amount : 0);
-  const [category, setCategory] = useState(expense ? expense.category : 'Food');
-  const [note, setNote] = useState(expense ? expense.note || '' : '');
+  const [category, setCategory] = useState(expense ? expense.category : "Food");
+  const [note, setNote] = useState(expense ? expense.note || "" : "");
   const [date, setDate] = useState<Date>(
     expense ? new Date(expense.date) : new Date()
   );
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const { addExpense, updateExpense } = useBudget();
+  const { addExpense } = useBudget();
+  const { session } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
+    if (amount <= 0) {
+      toast.error("Amount must be greater than zero");
+      return;
+    }
+    if (!category) {
+      toast.error("Please select a category");
+      return;
+    }
+
+    if (!session || !session.user) {
+      toast.error("You must be logged in to add an expense");
+      return;
+    }
+
+    setIsSubmitting(true);
+
     const expenseData = {
       amount: Number(amount),
-      category: category as any, // Type assertion
+      user_id: session.user.id,
+      category: category as any,
       note: note || undefined,
       date: date.toISOString(),
     };
 
     try {
-      if (isEdit && expense) {
-        await updateExpense(expense.id, expenseData);
-      } else {
-        await addExpense(expenseData);
-      }
+      await addExpense(expenseData);
       onSubmit();
     } catch (error) {
-      console.error('Error saving expense:', error);
+      console.error("Error saving expense:", error);
+      toast.error(error.message ?? "Could not save expense");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -132,7 +146,7 @@ const ExpenseForm = ({
               className="w-full justify-start text-left font-normal"
             >
               <CalendarIcon className="mr-2 h-4 w-4" />
-              {format(date, 'PP')}
+              {format(date, "PP")}
             </Button>
           </PopoverTrigger>
           <PopoverContent className="w-auto p-0 pointer-events-auto">
@@ -162,16 +176,12 @@ const ExpenseForm = ({
 
       <div className="flex justify-end space-x-2">
         {onCancel && (
-          <Button 
-            type="button" 
-            variant="outline" 
-            onClick={onCancel}
-          >
+          <Button type="button" variant="outline" onClick={onCancel}>
             Cancel
           </Button>
         )}
         <Button type="submit">
-          {isEdit ? 'Update Expense' : 'Add Expense'}
+          {isSubmitting ? "Adding Expense" : "Add Expense"}
         </Button>
       </div>
     </form>
