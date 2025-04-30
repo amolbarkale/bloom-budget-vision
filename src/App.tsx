@@ -5,7 +5,6 @@ import { AuthProvider } from "./context/AuthContext";
 import { BudgetProvider } from "./context/BudgetContext";
 import AuthGuard from "./components/AuthGuard";
 
-// Import pages
 import Index from "./pages/Index";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
