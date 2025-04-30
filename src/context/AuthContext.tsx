@@ -1,8 +1,7 @@
-
-import { createContext, useContext, useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { toast } from 'sonner';
-import { authService } from '../services/authService';
+import { createContext, useContext, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
+import { authService } from "../services/authService";
 
 interface User {
   id: string;
@@ -29,14 +28,14 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     // Check for token in localStorage
-    const storedToken = localStorage.getItem('budgetbloom_token');
-    const storedUser = localStorage.getItem('budgetbloom_user');
-    
+    const storedToken = localStorage.getItem("budgetbloom_token");
+    const storedUser = localStorage.getItem("budgetbloom_user");
+
     if (storedToken && storedUser) {
       setToken(storedToken);
       setUser(JSON.parse(storedUser));
     }
-    
+
     setIsLoading(false);
   }, []);
 
@@ -44,18 +43,18 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     try {
       setIsLoading(true);
       const response = await authService.login(email, password);
-      
+
       // Store token and user data
-      localStorage.setItem('budgetbloom_token', response.token);
-      localStorage.setItem('budgetbloom_user', JSON.stringify(response.user));
-      
+      localStorage.setItem("budgetbloom_token", response.token);
+      localStorage.setItem("budgetbloom_user", JSON.stringify(response.user));
+
       setToken(response.token);
       setUser(response.user);
-      
-      toast.success('Login successful!');
-      navigate('/dashboard');
+
+      toast.success("Login successful!");
+      navigate("/dashboard");
     } catch (error: any) {
-      toast.error(error.message || 'Login failed. Please try again.');
+      toast.error(error.message || "Login failed. Please try again.");
     } finally {
       setIsLoading(false);
     }
@@ -65,30 +64,30 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     try {
       setIsLoading(true);
       const response = await authService.register(email, password);
-      
+
       // Store token and user data
-      localStorage.setItem('budgetbloom_token', response.token);
-      localStorage.setItem('budgetbloom_user', JSON.stringify(response.user));
-      
+      localStorage.setItem("budgetbloom_token", response.token);
+      localStorage.setItem("budgetbloom_user", JSON.stringify(response.user));
+
       setToken(response.token);
       setUser(response.user);
-      
-      toast.success('Registration successful!');
-      navigate('/dashboard');
+
+      toast.success("Registration successful!");
+      navigate("/dashboard");
     } catch (error: any) {
-      toast.error(error.message || 'Registration failed. Please try again.');
+      toast.error(error.message || "Registration failed. Please try again.");
     } finally {
       setIsLoading(false);
     }
   };
 
   const logout = () => {
-    localStorage.removeItem('budgetbloom_token');
-    localStorage.removeItem('budgetbloom_user');
+    localStorage.removeItem("budgetbloom_token");
+    localStorage.removeItem("budgetbloom_user");
     setToken(null);
     setUser(null);
-    navigate('/login');
-    toast.success('You have been logged out');
+    navigate("/login");
+    toast.success("You have been logged out");
   };
 
   return (
@@ -111,7 +110,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider');
+    throw new Error("useAuth must be used within an AuthProvider");
   }
   return context;
 };
