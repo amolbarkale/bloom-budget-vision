@@ -1,7 +1,7 @@
 <div align="center">
   <br />
     <a href="https://bloom-budget-vision.vercel.app" target="_blank">
-      <img src="/budget-bloom-banner.jpg" alt="Project Banner">
+      <img src="/public/budget-bloom-banner.jpg" alt="Project Banner">
     </a>
   <br />
 
